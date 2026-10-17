@@ -1,0 +1,23 @@
+{
+  "name": "socially-approved-carousel",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "client",
+    "server"
+  ],
+  "scripts": {
+    "dev:client": "npm run dev --workspace @socially-approved-carousel/client",
+    "dev:server": "npm run dev --workspace @socially-approved-carousel/server",
+    "build": "npm run build --workspace @socially-approved-carousel/client && npm run build --workspace @socially-approved-carousel/server",
+    "lint": "eslint ."
+  },
+  "devDependencies": {
+    "eslint": "^9.20.1",
+    "eslint-plugin-react-hooks": "^5.2.0",
+    "eslint-plugin-react-refresh": "^0.4.19",
+    "globals": "^16.0.0",
+    "typescript-eslint": "^8.24.1"
+  }
+}

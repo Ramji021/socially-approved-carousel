@@ -1,0 +1,362 @@
+[
+  {
+    "id": "video-001",
+    "title": "Golden Hour in the Dolomites",
+    "description": "A quiet sunrise hike through the dramatic peaks and alpine meadows of northern Italy.",
+    "videoUrl": "https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4",
+    "thumbnailUrl": "https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=720&q=80",
+    "likes": 1284,
+    "shares": 96,
+    "duration": 32
+  },
+  {
+    "id": "video-002",
+    "title": "A Slow Morning in Kyoto",
+    "description": "Lantern-lit lanes, temple gardens, and the first cups of tea as the city wakes up.",
+    "videoUrl": "https://media.w3.org/2010/05/sintel/trailer.mp4",
+    "thumbnailUrl": "https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&w=720&q=80",
+    "likes": 936,
+    "shares": 71,
+    "duration": 27
+  },
+  {
+    "id": "video-003",
+    "title": "Coastline by Longboard",
+    "description": "Following the shoreline on a sunlit ride through the California coast.",
+    "videoUrl": "https://media.w3.org/2010/05/video/movie_300.mp4",
+    "thumbnailUrl": "https://images.unsplash.com/photo-1502680390469-be75c86b636f?auto=format&fit=crop&w=720&q=80",
+    "likes": 2471,
+    "shares": 184,
+    "duration": 41
+  },
+  {
+    "id": "video-004",
+    "title": "Pasta from Scratch",
+    "description": "A neighborhood chef shares the simple ritual behind fresh handmade tagliatelle.",
+    "videoUrl": "https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4",
+    "thumbnailUrl": "https://images.unsplash.com/photo-1551183053-bf91a1d81141?auto=format&fit=crop&w=720&q=80",
+    "likes": 1842,
+    "shares": 122,
+    "duration": 36
+  },
+  {
+    "id": "video-005",
+    "title": "The Blue Hour in Reykjavík",
+    "description": "Winter light settles over colorful rooftops just before the northern night begins.",
+    "videoUrl": "https://media.w3.org/2010/05/sintel/trailer.mp4",
+    "thumbnailUrl": "https://images.unsplash.com/photo-1476610182048-b716b8518aae?auto=format&fit=crop&w=720&q=80",
+    "likes": 1108,
+    "shares": 89,
+    "duration": 29
+  },
+  {
+    "id": "video-006",
+    "title": "Desert Camp Under the Stars",
+    "description": "An evening in the dunes with campfire stories and a sky full of stars.",
+    "videoUrl": "https://media.w3.org/2010/05/video/movie_300.mp4",
+    "thumbnailUrl": "https://images.unsplash.com/photo-1509316785289-025f5b846b35?auto=format&fit=crop&w=720&q=80",
+    "likes": 3025,
+    "shares": 243,
+    "duration": 44
+  },
+  {
+    "id": "video-007",
+    "title": "Sunday Market Finds",
+    "description": "Seasonal produce, fresh flowers, and the friendly faces of a local market.",
+    "videoUrl": "https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4",
+    "thumbnailUrl": "https://images.unsplash.com/photo-1488459716781-31db52582fe9?auto=format&fit=crop&w=720&q=80",
+    "likes": 758,
+    "shares": 54,
+    "duration": 24
+  },
+  {
+    "id": "video-008",
+    "title": "A Forest Trail After Rain",
+    "description": "Mossy paths and soft morning mist on a restorative walk through the woods.",
+    "videoUrl": "https://media.w3.org/2010/05/sintel/trailer.mp4",
+    "thumbnailUrl": "https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=720&q=80",
+    "likes": 1432,
+    "shares": 101,
+    "duration": 38
+  },
+  {
+    "id": "video-009",
+    "title": "Skatepark After School",
+    "description": "Local skaters trade tricks and encouragement at their favorite neighborhood spot.",
+    "videoUrl": "https://media.w3.org/2010/05/video/movie_300.mp4",
+    "thumbnailUrl": "https://images.unsplash.com/photo-1520045892732-304bc3ac5d8e?auto=format&fit=crop&w=720&q=80",
+    "likes": 2190,
+    "shares": 167,
+    "duration": 31
+  },
+  {
+    "id": "video-010",
+    "title": "Ocean Light from the Pier",
+    "description": "Waves roll in beneath a pastel sunset on a peaceful evening by the water.",
+    "videoUrl": "https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4",
+    "thumbnailUrl": "https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&fit=crop&w=720&q=80",
+    "likes": 1657,
+    "shares": 128,
+    "duration": 34
+  },
+  {
+    "id": "video-011",
+    "title": "Coffee, Poured Slowly",
+    "description": "A barista walks through a careful pour-over and the details that make it sing.",
+    "videoUrl": "https://media.w3.org/2010/05/sintel/trailer.mp4",
+    "thumbnailUrl": "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=720&q=80",
+    "likes": 912,
+    "shares": 62,
+    "duration": 26
+  },
+  {
+    "id": "video-012",
+    "title": "Cycling Through the Countryside",
+    "description": "A winding country lane makes the perfect route for a weekend ride.",
+    "videoUrl": "https://media.w3.org/2010/05/video/movie_300.mp4",
+    "thumbnailUrl": "https://images.unsplash.com/photo-1517649763962-0c623066013b?auto=format&fit=crop&w=720&q=80",
+    "likes": 1378,
+    "shares": 94,
+    "duration": 37
+  },
+  {
+    "id": "video-013",
+    "title": "Rainy Day Bookshop",
+    "description": "A cozy independent bookstore is the ideal shelter from an afternoon shower.",
+    "videoUrl": "https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4",
+    "thumbnailUrl": "https://images.unsplash.com/photo-1507842217343-583bb7270b66?auto=format&fit=crop&w=720&q=80",
+    "likes": 1086,
+    "shares": 79,
+    "duration": 28
+  },
+  {
+    "id": "video-014",
+    "title": "Sailing Into the Wind",
+    "description": "A small sailboat catches the breeze on a bright afternoon out on the bay.",
+    "videoUrl": "https://media.w3.org/2010/05/sintel/trailer.mp4",
+    "thumbnailUrl": "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=720&q=80",
+    "likes": 1992,
+    "shares": 145,
+    "duration": 40
+  },
+  {
+    "id": "video-015",
+    "title": "The Art of Pottery",
+    "description": "Clay spins into a simple, elegant bowl in a sunlit neighborhood studio.",
+    "videoUrl": "https://media.w3.org/2010/05/video/movie_300.mp4",
+    "thumbnailUrl": "https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?auto=format&fit=crop&w=720&q=80",
+    "likes": 843,
+    "shares": 57,
+    "duration": 33
+  },
+  {
+    "id": "video-016",
+    "title": "Alpine Lake Reflections",
+    "description": "Still water mirrors a mountain range on an early morning trail stop.",
+    "videoUrl": "https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4",
+    "thumbnailUrl": "https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=720&q=80",
+    "likes": 2783,
+    "shares": 209,
+    "duration": 35
+  },
+  {
+    "id": "video-017",
+    "title": "Rooftop Garden Harvest",
+    "description": "Neighbors gather fresh herbs and tomatoes from a thriving city rooftop.",
+    "videoUrl": "https://media.w3.org/2010/05/sintel/trailer.mp4",
+    "thumbnailUrl": "https://images.unsplash.com/photo-1497250681960-ef046c08a56e?auto=format&fit=crop&w=720&q=80",
+    "likes": 1196,
+    "shares": 83,
+    "duration": 30
+  },
+  {
+    "id": "video-018",
+    "title": "Night Lights in Seoul",
+    "description": "Neon signs and late-night street food bring a lively city block to life.",
+    "videoUrl": "https://media.w3.org/2010/05/video/movie_300.mp4",
+    "thumbnailUrl": "https://images.unsplash.com/photo-1517154421773-0529f29ea451?auto=format&fit=crop&w=720&q=80",
+    "likes": 2314,
+    "shares": 176,
+    "duration": 42
+  },
+  {
+    "id": "video-019",
+    "title": "Morning Surf Check",
+    "description": "Surfers watch the first clean sets arrive at a quiet beach break.",
+    "videoUrl": "https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4",
+    "thumbnailUrl": "https://images.unsplash.com/photo-1455729552865-3658a5d39692?auto=format&fit=crop&w=720&q=80",
+    "likes": 1879,
+    "shares": 137,
+    "duration": 29
+  },
+  {
+    "id": "video-020",
+    "title": "A Table Set for Friends",
+    "description": "A home cook prepares a colorful seasonal dinner to share with friends.",
+    "videoUrl": "https://media.w3.org/2010/05/sintel/trailer.mp4",
+    "thumbnailUrl": "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=720&q=80",
+    "likes": 1541,
+    "shares": 113,
+    "duration": 39
+  },
+  {
+    "id": "video-021",
+    "title": "Wildflowers on the Ridge",
+    "description": "A hillside trail bursts with color during a short-lived spring bloom.",
+    "videoUrl": "https://media.w3.org/2010/05/video/movie_300.mp4",
+    "thumbnailUrl": "https://images.unsplash.com/photo-1490750967868-88aa4486c946?auto=format&fit=crop&w=720&q=80",
+    "likes": 1437,
+    "shares": 98,
+    "duration": 25
+  },
+  {
+    "id": "video-022",
+    "title": "Streetball at Sunset",
+    "description": "A friendly pickup game goes down to the final shot at the outdoor court.",
+    "videoUrl": "https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4",
+    "thumbnailUrl": "https://images.unsplash.com/photo-1519861531473-9200262188bf?auto=format&fit=crop&w=720&q=80",
+    "likes": 2118,
+    "shares": 163,
+    "duration": 34
+  },
+  {
+    "id": "video-023",
+    "title": "The Last Train Home",
+    "description": "Rain-speckled windows turn a late train ride into a moving city postcard.",
+    "videoUrl": "https://media.w3.org/2010/05/sintel/trailer.mp4",
+    "thumbnailUrl": "https://images.unsplash.com/photo-1474487548417-781cb71495f3?auto=format&fit=crop&w=720&q=80",
+    "likes": 1261,
+    "shares": 91,
+    "duration": 31
+  },
+  {
+    "id": "video-024",
+    "title": "Mountain Cabin Weekend",
+    "description": "A wood-fired breakfast and misty views make for a restorative cabin morning.",
+    "videoUrl": "https://media.w3.org/2010/05/video/movie_300.mp4",
+    "thumbnailUrl": "https://images.unsplash.com/photo-1449158743715-0a90ebb6d2d8?auto=format&fit=crop&w=720&q=80",
+    "likes": 1937,
+    "shares": 142,
+    "duration": 36
+  },
+  {
+    "id": "video-025",
+    "title": "Fresh Citrus at the Market",
+    "description": "Bright oranges and lemons are stacked high at a bustling produce stall.",
+    "videoUrl": "https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4",
+    "thumbnailUrl": "https://images.unsplash.com/photo-1547514701-42782101795e?auto=format&fit=crop&w=720&q=80",
+    "likes": 781,
+    "shares": 49,
+    "duration": 22
+  },
+  {
+    "id": "video-026",
+    "title": "Climbing Above the Clouds",
+    "description": "A patient ascent rewards the climbing team with an unforgettable summit view.",
+    "videoUrl": "https://media.w3.org/2010/05/sintel/trailer.mp4",
+    "thumbnailUrl": "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=720&q=80",
+    "likes": 3048,
+    "shares": 256,
+    "duration": 45
+  },
+  {
+    "id": "video-027",
+    "title": "Tiny Balcony, Big Garden",
+    "description": "A small apartment balcony becomes a leafy retreat with a few clever planters.",
+    "videoUrl": "https://media.w3.org/2010/05/video/movie_300.mp4",
+    "thumbnailUrl": "https://images.unsplash.com/photo-1466692476868-aef1dfb1e735?auto=format&fit=crop&w=720&q=80",
+    "likes": 1062,
+    "shares": 72,
+    "duration": 27
+  },
+  {
+    "id": "video-028",
+    "title": "A Walk Through Old Lisbon",
+    "description": "Colorful tiled facades and steep cobbled streets on a slow city wander.",
+    "videoUrl": "https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4",
+    "thumbnailUrl": "https://images.unsplash.com/photo-1555881400-74d7acaacd8b?auto=format&fit=crop&w=720&q=80",
+    "likes": 1713,
+    "shares": 124,
+    "duration": 38
+  },
+  {
+    "id": "video-029",
+    "title": "Skateboarding the Waterfront",
+    "description": "A smooth line along the waterfront promenade on a clear afternoon.",
+    "videoUrl": "https://media.w3.org/2010/05/sintel/trailer.mp4",
+    "thumbnailUrl": "https://images.unsplash.com/photo-1520045892732-304bc3ac5d8e?auto=format&fit=crop&w=720&q=80",
+    "likes": 1988,
+    "shares": 153,
+    "duration": 30
+  },
+  {
+    "id": "video-030",
+    "title": "Rainforest Canopy Walk",
+    "description": "A raised path winds through a vivid green rainforest after the rain.",
+    "videoUrl": "https://media.w3.org/2010/05/video/movie_300.mp4",
+    "thumbnailUrl": "https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=720&q=80",
+    "likes": 2237,
+    "shares": 171,
+    "duration": 43
+  },
+  {
+    "id": "video-031",
+    "title": "Pancakes on a Camp Stove",
+    "description": "A simple trail breakfast tastes even better with a view of the lake.",
+    "videoUrl": "https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4",
+    "thumbnailUrl": "https://images.unsplash.com/photo-1528207776546-365bb710ee93?auto=format&fit=crop&w=720&q=80",
+    "likes": 1328,
+    "shares": 88,
+    "duration": 26
+  },
+  {
+    "id": "video-032",
+    "title": "The View from the Tram",
+    "description": "A scenic ride climbs above the rooftops for a fresh perspective on the city.",
+    "videoUrl": "https://media.w3.org/2010/05/sintel/trailer.mp4",
+    "thumbnailUrl": "https://images.unsplash.com/photo-1519501025264-65ba15a82390?auto=format&fit=crop&w=720&q=80",
+    "likes": 1489,
+    "shares": 107,
+    "duration": 33
+  },
+  {
+    "id": "video-033",
+    "title": "A Quiet Day at the Lake",
+    "description": "Paddle out, take a breath, and enjoy the stillness of an early summer day.",
+    "videoUrl": "https://media.w3.org/2010/05/video/movie_300.mp4",
+    "thumbnailUrl": "https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=720&q=80",
+    "likes": 2445,
+    "shares": 196,
+    "duration": 40
+  },
+  {
+    "id": "video-034",
+    "title": "Street Art in Full Color",
+    "description": "An artist transforms a blank wall into a joyful neighborhood landmark.",
+    "videoUrl": "https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4",
+    "thumbnailUrl": "https://images.unsplash.com/photo-1541961017774-22349e4a1262?auto=format&fit=crop&w=720&q=80",
+    "likes": 1764,
+    "shares": 131,
+    "duration": 35
+  },
+  {
+    "id": "video-035",
+    "title": "Sunrise Over the Valley",
+    "description": "First light spills over the hills during a peaceful morning viewpoint stop.",
+    "videoUrl": "https://media.w3.org/2010/05/sintel/trailer.mp4",
+    "thumbnailUrl": "https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?auto=format&fit=crop&w=720&q=80",
+    "likes": 2653,
+    "shares": 207,
+    "duration": 37
+  },
+  {
+    "id": "video-036",
+    "title": "Golden Hour at the Pier",
+    "description": "The day's final light paints the water as friends gather at the end of the pier.",
+    "videoUrl": "https://media.w3.org/2010/05/video/movie_300.mp4",
+    "thumbnailUrl": "https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&fit=crop&w=720&q=80",
+    "likes": 1582,
+    "shares": 116,
+    "duration": 28
+  }
+]
