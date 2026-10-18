@@ -18,7 +18,7 @@ export function useVideos(): UseVideosResult {
 
     videoApi
       .getVideos()
-      .then(({ videos: responseVideos }) => {
+      .then((responseVideos) => {
         if (isCurrent) setVideos(responseVideos);
       })
       .catch((requestError: unknown) => {

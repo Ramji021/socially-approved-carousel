@@ -81,6 +81,8 @@ eslint.config.js    Shared ESLint rules for client and server
 - `client/src/services/videoApi.ts` centralizes requests to the video API using `VITE_API_BASE_URL`.
 - `client/src/hooks/useVideos.ts` provides loading, error, and video state for consumers of the API service.
 - `client/src/types/` defines the frontend video and API contracts.
+
+The client fetches video records only with `GET /videos`. It validates the response shape before returning typed data, reports network and malformed-response errors, and displays an empty-state message when the server returns an empty video list.
 - `server/` is the HTTP API application, kept separate so API logic and runtime configuration are not bundled with the browser app.
 - `server/src/` holds the Express application setup and server entry point.
 - `server/src/data/` holds the sample `videos.json` fixture; the API serves it without a database.
