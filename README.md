@@ -81,6 +81,7 @@ eslint.config.js    Shared ESLint rules for client and server
 - `client/` is the browser application, kept separate so it can be developed and built independently from the API.
 - `client/src/components/` contains small reusable building blocks; they are not assembled into the full carousel interface yet.
 - The client uses Tailwind CSS utility classes, configured through PostCSS and `client/tailwind.config.js`.
+- The outer carousel opens an indexed modal carousel with responsive slides, keyboard navigation, and swipe/drag support. Only its active slide mounts a video player.
 - `client/src/services/videoApi.ts` centralizes requests to the video API using `VITE_API_BASE_URL`.
 - `client/src/hooks/useVideos.ts` provides loading, error, and video state for consumers of the API service.
 - `client/src/types/` defines the frontend video and API contracts.

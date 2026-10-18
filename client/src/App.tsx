@@ -1,9 +1,8 @@
-import { useCallback, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { SociallyApproved } from "./components/SociallyApproved/SociallyApproved";
 import { VideoCarousel } from "./components/SociallyApproved/VideoCarousel";
 import { LoadingSpinner } from "./components/LoadingSpinner/LoadingSpinner";
 import { VideoModal } from "./components/VideoModal/VideoModal";
-import { VideoPlayer } from "./components/VideoPlayer/VideoPlayer";
 import { useVideos } from "./hooks/useVideos";
 import type { Video } from "./types/video";
 
@@ -11,12 +10,17 @@ const MAX_CAROUSEL_VIDEOS = 24;
 
 export function App() {
   const { videos, isLoading, error } = useVideos();
-  const [selectedVideo, setSelectedVideo] = useState<Video | null>(null);
+  const carouselVideos = useMemo(
+    () => videos.slice(0, MAX_CAROUSEL_VIDEOS),
+    [videos],
+  );
+  const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const openVideo = useCallback((video: Video) => {
-    setSelectedVideo(video);
-  }, []);
+    const index = carouselVideos.findIndex((item) => item.id === video.id);
+    if (index !== -1) setSelectedIndex(index);
+  }, [carouselVideos]);
   const closeVideo = useCallback(() => {
-    setSelectedVideo(null);
+    setSelectedIndex(null);
   }, []);
 
   return (
@@ -45,32 +49,18 @@ export function App() {
 
       {!isLoading && !error && videos.length > 0 && (
         <VideoCarousel
-          videos={videos.slice(0, MAX_CAROUSEL_VIDEOS)}
+          videos={carouselVideos}
           onSelect={openVideo}
         />
       )}
 
       <VideoModal
-        isOpen={selectedVideo !== null}
-        title={selectedVideo?.title ?? "Video"}
+        isOpen={selectedIndex !== null}
+        videos={carouselVideos}
+        activeIndex={selectedIndex ?? 0}
+        onActiveIndexChange={setSelectedIndex}
         onClose={closeVideo}
-      >
-        {selectedVideo && (
-          <div className="w-full max-w-3xl">
-            <VideoPlayer
-              src={selectedVideo.videoUrl}
-              title={selectedVideo.title}
-              poster={selectedVideo.thumbnailUrl}
-            />
-            <h2 className="mt-4 text-xl font-semibold text-gray-900">
-              {selectedVideo.title}
-            </h2>
-            <p className="mt-2 text-sm leading-relaxed text-slate-600">
-              {selectedVideo.description}
-            </p>
-          </div>
-        )}
-      </VideoModal>
+      />
     </SociallyApproved>
   );
 }
