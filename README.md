@@ -50,7 +50,13 @@ npm run build
 
 ```text
 client/
-  src/              React application source and entry point
+  src/
+    components/     Small reusable carousel UI building blocks
+    hooks/          React data hooks
+    services/       Dedicated backend API client
+    types/          Frontend data and API response interfaces
+    utils/           Shared formatting helpers
+    App.tsx         Minimal application shell
   index.html        Vite browser document
   vite.config.ts    Vite and React plugin configuration
   tsconfig*.json    Client and Vite TypeScript settings
@@ -71,7 +77,10 @@ eslint.config.js    Shared ESLint rules for client and server
 ```
 
 - `client/` is the browser application, kept separate so it can be developed and built independently from the API.
-- `client/src/` is where React UI components and client-side logic will go. It currently contains only the empty app shell and bootstrapping entry point.
+- `client/src/components/` contains small reusable building blocks; they are not assembled into the full carousel interface yet.
+- `client/src/services/videoApi.ts` centralizes requests to the video API using `VITE_API_BASE_URL`.
+- `client/src/hooks/useVideos.ts` provides loading, error, and video state for consumers of the API service.
+- `client/src/types/` defines the frontend video and API contracts.
 - `server/` is the HTTP API application, kept separate so API logic and runtime configuration are not bundled with the browser app.
 - `server/src/` holds the Express application setup and server entry point.
 - `server/src/data/` holds the sample `videos.json` fixture; the API serves it without a database.
