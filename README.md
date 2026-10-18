@@ -79,9 +79,14 @@ eslint.config.js    Shared ESLint rules for client and server
 ```
 
 - `client/` is the browser application, kept separate so it can be developed and built independently from the API.
-- `client/src/components/` contains small reusable building blocks; they are not assembled into the full carousel interface yet.
+- `client/src/components/` contains reusable carousel, modal, video-player, and control building blocks.
 - The client uses Tailwind CSS utility classes, configured through PostCSS and `client/tailwind.config.js`.
-- The outer carousel opens an indexed modal carousel with responsive slides, keyboard navigation, and swipe/drag support. Only its active slide mounts a video player.
+- The client page presents an “Our Bestsellers” heading followed directly by a thumbnail-led horizontal video carousel, with no navbar or separate outer card details. Selecting a tile opens the indexed responsive modal carousel.
+- The modal carousel supports keyboard navigation and swipe/drag. Only its active slide mounts a video player.
+- The active modal player uses a referenced HTML video element and custom play/pause/mute controls; playback and loading errors are handled in the player without rerendering the carousel.
+- The video source is attached only after a user requests playback, avoiding eager downloads and ensuring `play()` starts loading rather than waiting for a `canplay` event deferred by `preload="none"`.
+- The modal player progress slider tracks current time with throttled animation-frame updates, seeks the active video, and disables seeking when duration is unavailable.
+- The player progress bar follows the media timeline, throttles time updates with `requestAnimationFrame`, and seeks through the native video element. It disables seeking when duration is unknown.
 - `client/src/services/videoApi.ts` centralizes requests to the video API using `VITE_API_BASE_URL`.
 - `client/src/hooks/useVideos.ts` provides loading, error, and video state for consumers of the API service.
 - `client/src/types/` defines the frontend video and API contracts.
@@ -94,4 +99,4 @@ The client fetches video records only with `GET /videos`. It validates the respo
 
 ## Client/server communication
 
-The server listens on port `4000` by default and exposes `GET /api/videos`. It responds with JSON shaped like `{ "videos": [...] }`, read from `server/src/data/videos.json`. When client-side requests are added, the client can build the API URL from `import.meta.env.VITE_API_BASE_URL` (default example: `http://localhost:4000`) and make standard HTTP requests. The server's `CLIENT_ORIGIN` setting configures CORS for the Vite origin (`http://localhost:5173` by default). The current client is intentionally an empty shell and does not make requests yet.
+The server listens on port `4000` by default and exposes `GET /videos` (also available at `/api/videos`). It responds with JSON shaped like `{ "videos": [...] }`, read from `server/src/data/videos.json`. The client calls `GET /videos` using `import.meta.env.VITE_API_BASE_URL` (default: `http://localhost:4000`). The server's `CLIENT_ORIGIN` setting configures CORS for the Vite origin (`http://localhost:5173` by default).

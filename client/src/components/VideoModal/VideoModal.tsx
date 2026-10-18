@@ -144,11 +144,8 @@ export function VideoModal({
   const activeVideo = videos[activeIndex];
   if (!activeVideo) return null;
 
-  const firstVisibleIndex = Math.min(
-    Math.max(activeIndex - 1, 0),
-    Math.max(videos.length - 3, 0),
-  );
-  const visibleVideos = videos.slice(firstVisibleIndex, firstVisibleIndex + 3);
+  const firstVisibleIndex = Math.max(activeIndex - 1, 0);
+  const visibleVideos = videos.slice(firstVisibleIndex, Math.min(activeIndex + 2, videos.length));
 
   function step(direction: -1 | 1) {
     onActiveIndexChange(Math.min(Math.max(activeIndex + direction, 0), videos.length - 1));
@@ -182,37 +179,36 @@ export function VideoModal({
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto bg-black/80 p-3 sm:p-6"
+      className="fixed inset-0 z-50 flex items-center justify-center overflow-hidden bg-black/90 px-2 py-8 sm:px-6"
       onClick={(event) => {
         if (event.target === event.currentTarget) onClose();
       }}
     >
       <section
         ref={dialogRef}
-        className="relative w-full max-w-6xl rounded-2xl bg-white p-4 shadow-2xl sm:p-6"
+        className="relative flex h-full w-full items-center justify-center"
         role="dialog"
         aria-modal="true"
         aria-label={`Video carousel: ${activeVideo.title}`}
         aria-roledescription="carousel"
       >
-        <div className="mb-4 flex items-center justify-between gap-4">
-          <p className="text-sm font-medium text-slate-600" aria-live="polite">
-            Video {activeIndex + 1} of {videos.length}
-          </p>
-          <button
-            ref={closeButtonRef}
-            className="inline-flex size-10 items-center justify-center rounded-full text-2xl text-gray-600 hover:bg-gray-100 hover:text-gray-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-violet-600"
-            type="button"
-            onClick={onClose}
-            aria-label="Close video carousel"
-            title="Close (Escape)"
-          >
-            <span aria-hidden="true">×</span>
-          </button>
-        </div>
+        <button
+          ref={closeButtonRef}
+          className="absolute right-2 top-0 z-50 inline-flex size-12 items-center justify-center rounded-full text-4xl font-light text-white transition hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-white sm:right-4 sm:top-2"
+          type="button"
+          onClick={onClose}
+          aria-label="Close video carousel"
+          title="Close (Escape)"
+        >
+          <span aria-hidden="true">×</span>
+        </button>
+
+        <p className="absolute left-1/2 top-2 z-40 -translate-x-1/2 text-xs font-medium text-white/70 sm:text-sm" aria-live="polite">
+          {activeIndex + 1} / {videos.length}
+        </p>
 
         <div
-          className="flex items-stretch gap-3 [touch-action:pan-y]"
+          className="relative flex h-[min(82vh,780px)] w-full max-w-[1400px] touch-pan-y items-center justify-center"
           onMouseDown={handleMouseDown}
           onTouchStart={handleTouchStart}
           onTouchEnd={handleTouchEnd}
@@ -222,70 +218,77 @@ export function VideoModal({
           {visibleVideos.map((video, visibleIndex) => {
             const index = firstVisibleIndex + visibleIndex;
             const isActive = index === activeIndex;
+            const position = index - activeIndex;
+            const slideClass = [
+              "absolute left-1/2 top-1/2 block w-[min(78vw,390px)] -translate-y-1/2 overflow-hidden rounded-xl bg-black p-0 text-left shadow-2xl transition-[transform,opacity] duration-300 ease-out focus-visible:outline focus-visible:outline-2 focus-visible:outline-white",
+              isActive
+                ? "z-30 -translate-x-1/2 scale-100 opacity-100"
+                : position < 0
+                  ? "z-20 hidden -translate-x-[125%] scale-[0.82] cursor-pointer opacity-45 hover:opacity-65 md:block"
+                  : "z-20 hidden translate-x-[25%] scale-[0.82] cursor-pointer opacity-45 hover:opacity-65 md:block",
+            ].join(" ");
 
-            return (
-              <div
-                className={[
-                  isActive ? "flex" : "hidden md:flex",
-                  "min-w-0 flex-1 flex-col",
-                ].join(" ")}
-                key={video.id}
-                role="group"
-                aria-roledescription="slide"
-                aria-label={`Video ${index + 1} of ${videos.length}: ${video.title}${isActive ? ", active" : ""}`}
-                aria-current={isActive ? "true" : undefined}
-              >
-                {isActive ? (
+            if (isActive) {
+              return (
+                <div
+                  className={slideClass}
+                  key={video.id}
+                  role="group"
+                  aria-roledescription="slide"
+                  aria-label={`Video ${index + 1} of ${videos.length}: ${video.title}, active`}
+                  aria-current="true"
+                >
                   <VideoPlayer
                     src={video.videoUrl}
                     title={video.title}
                     poster={video.thumbnailUrl}
+                    isActive
+                    presentation="portrait"
                   />
-                ) : (
+                </div>
+              );
+            }
+
+            return (
+              <button
+                className={slideClass}
+                key={video.id}
+                type="button"
+                onClick={() => onActiveIndexChange(index)}
+                aria-label={`Show video ${index + 1}: ${video.title}`}
+              >
                   <img
-                    className="aspect-video w-full rounded-xl bg-gray-200 object-cover"
+                    className="aspect-[9/16] max-h-[82vh] w-full bg-gray-200 object-cover"
                     src={video.thumbnailUrl}
                     alt=""
                     loading="lazy"
                     decoding="async"
                   />
-                )}
-                <h2 className="mt-3 text-base font-semibold text-gray-900 sm:text-lg">
-                  {video.title}
-                </h2>
-                <p className="mt-1 line-clamp-2 text-sm leading-relaxed text-slate-600">
-                  {video.description}
-                </p>
-              </div>
+              </button>
             );
           })}
         </div>
 
-        <div className="mt-5 flex items-center justify-between gap-4">
+        <div className="pointer-events-none absolute inset-x-0 top-1/2 z-40 flex -translate-y-1/2 items-center justify-between px-1 sm:px-8">
           <button
-            className="rounded-lg border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-violet-600 disabled:cursor-not-allowed disabled:opacity-40"
+            className="pointer-events-auto grid size-10 place-items-center rounded-full bg-white text-xl font-medium text-gray-900 shadow-lg transition hover:scale-105 hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-violet-600 disabled:cursor-not-allowed disabled:opacity-40 sm:size-12"
             type="button"
             onClick={() => step(-1)}
             disabled={activeIndex === 0}
             aria-label="Previous video"
             title="Previous video (Left Arrow)"
           >
-            <span aria-hidden="true">←</span>
-            <span className="ml-2">Previous</span>
+            <span aria-hidden="true">‹</span>
           </button>
-          <span className="text-xs text-slate-500">
-            Use ← and → to navigate
-          </span>
           <button
-            className="rounded-lg border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-violet-600 disabled:cursor-not-allowed disabled:opacity-40"
+            className="pointer-events-auto grid size-10 place-items-center rounded-full bg-white text-xl font-medium text-gray-900 shadow-lg transition hover:scale-105 hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-violet-600 disabled:cursor-not-allowed disabled:opacity-40 sm:size-12"
             type="button"
             onClick={() => step(1)}
             disabled={activeIndex === videos.length - 1}
             aria-label="Next video"
             title="Next video (Right Arrow)"
           >
-            <span className="mr-2">Next</span>
-            <span aria-hidden="true">→</span>
+            <span aria-hidden="true">›</span>
           </button>
         </div>
       </section>

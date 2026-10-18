@@ -66,33 +66,28 @@ export function VideoCarousel({ videos, onSelect }: VideoCarouselProps) {
 
   return (
     <section aria-label="Video carousel">
-      <div className="mb-4 flex items-center justify-between gap-4">
-        <h2 className="text-xl font-semibold text-gray-900 sm:text-2xl">
-          Explore videos
-        </h2>
-        <div className="hidden gap-2 md:flex">
-          <button
-            className="grid size-10 place-items-center rounded-full border border-gray-300 bg-white text-gray-700 transition hover:border-violet-400 hover:text-violet-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-violet-600"
-            type="button"
-            aria-label="Scroll videos left"
-            onClick={() => scroll(-1)}
-          >
-            <span aria-hidden="true">←</span>
-          </button>
-          <button
-            className="grid size-10 place-items-center rounded-full border border-gray-300 bg-white text-gray-700 transition hover:border-violet-400 hover:text-violet-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-violet-600"
-            type="button"
-            aria-label="Scroll videos right"
-            onClick={() => scroll(1)}
-          >
-            <span aria-hidden="true">→</span>
-          </button>
-        </div>
+      <div className="mb-3 flex justify-end gap-2">
+        <button
+          className="grid size-10 place-items-center rounded-full border border-gray-300 bg-white text-gray-700 shadow-sm transition hover:border-violet-400 hover:text-violet-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-violet-600 md:size-11"
+          type="button"
+          aria-label="Scroll videos left"
+          onClick={() => scroll(-1)}
+        >
+          <span aria-hidden="true">←</span>
+        </button>
+        <button
+          className="grid size-10 place-items-center rounded-full border border-gray-300 bg-white text-gray-700 shadow-sm transition hover:border-violet-400 hover:text-violet-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-violet-600 md:size-11"
+          type="button"
+          aria-label="Scroll videos right"
+          onClick={() => scroll(1)}
+        >
+          <span aria-hidden="true">→</span>
+        </button>
       </div>
 
       <div
         ref={trackRef}
-        className="flex snap-x snap-mandatory gap-4 overflow-x-auto overscroll-x-contain pb-5 [scrollbar-width:thin] [touch-action:pan-x] md:gap-5"
+        className="flex snap-x snap-mandatory gap-3 overflow-x-auto overscroll-x-contain pb-3 [scrollbar-width:none] [touch-action:pan-x] md:gap-5 [&::-webkit-scrollbar]:hidden"
         onPointerDown={handlePointerDown}
         onPointerMove={handlePointerMove}
         onClickCapture={preventClickAfterDrag}
@@ -102,7 +97,7 @@ export function VideoCarousel({ videos, onSelect }: VideoCarouselProps) {
       >
         {videos.map((video) => (
           <div
-            className="w-[min(82vw,300px)] shrink-0 snap-start sm:w-[min(46vw,300px)] md:w-[min(31vw,300px)]"
+            className="w-[min(78vw,340px)] shrink-0 snap-start sm:w-[min(45vw,340px)] lg:w-[min(31vw,360px)]"
             key={video.id}
           >
             <VideoCard video={video} onSelect={onSelect} />
