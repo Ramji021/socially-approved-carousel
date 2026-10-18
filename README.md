@@ -33,7 +33,7 @@ The server repository imports `server/src/data/videos.json` as a TypeScript JSON
 ## API
 
 - `GET /health` returns `200 { "status": "ok" }`.
-- `GET /videos` returns `200 { "videos": [...] }`.
+- `GET /videos?userId=user-123` returns `200 { "videos": [...] }`, including a per-video `liked` boolean for that user. The query parameter is optional; without it, every video's `liked` field is `false`.
 - `POST /like` accepts `{ "videoId": "video-001", "userId": "user-123" }` and returns the updated video, like count, and duplicate status. Each user can like a video once during the current server process.
 - `POST /share` accepts `{ "videoId": "video-001", "platform": "copy" }`, where platform is `copy`, `web-share`, `whatsapp`, `facebook`, or `twitter`; it returns the updated share count.
 
@@ -85,6 +85,7 @@ eslint.config.js    Shared ESLint rules for client and server
 - The modal carousel supports keyboard navigation and swipe/drag. Only its active slide mounts a video player.
 - The active modal player uses a referenced HTML video element and custom play/pause/mute controls; playback and loading errors are handled in the player without rerendering the carousel.
 - The video source is attached only after a user requests playback, avoiding eager downloads and ensuring `play()` starts loading rather than waiting for a `canplay` event deferred by `preload="none"`.
+- Outer carousel and modal preview thumbnails use native lazy loading. An `IntersectionObserver` pauses the active video and releases its source when the player leaves the viewport. Only the active modal slide mounts a video element, keeping the active video count below the target limit.
 - The modal player progress slider tracks current time with throttled animation-frame updates, seeks the active video, and disables seeking when duration is unavailable.
 - The player progress bar follows the media timeline, throttles time updates with `requestAnimationFrame`, and seeks through the native video element. It disables seeking when duration is unknown.
 - `client/src/services/videoApi.ts` centralizes requests to the video API using `VITE_API_BASE_URL`.
@@ -92,6 +93,8 @@ eslint.config.js    Shared ESLint rules for client and server
 - `client/src/types/` defines the frontend video and API contracts.
 
 The client fetches video records only with `GET /videos`. It validates the response shape before returning typed data, reports network and malformed-response errors, and displays an empty-state message when the server returns an empty video list.
+Like actions use the dedicated client API service to send `POST /like`. The UI updates counts optimistically, prevents duplicate submissions while a request is pending or after success, and rolls back with an inline error if the request fails. The client uses a generated browser-stored user ID; backend likes are in-memory and reset when the server restarts.
+Video share controls offer copy link, native device share, WhatsApp, Facebook, and X/Twitter. Successful share actions are recorded through the API service's `POST /share` request; the share count updates optimistically and rolls back with an error if the API request fails.
 - `server/` is the HTTP API application, kept separate so API logic and runtime configuration are not bundled with the browser app.
 - `server/src/` holds the Express application setup and server entry point.
 - `server/src/data/` holds the sample `videos.json` fixture; the API serves it without a database.

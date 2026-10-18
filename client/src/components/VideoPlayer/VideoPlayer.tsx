@@ -25,6 +25,7 @@ export function VideoPlayer({
   presentation = "landscape",
 }: VideoPlayerProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
+  const playerStageRef = useRef<HTMLDivElement>(null);
   const progressFrameRef = useRef<number | null>(null);
   const lastProgressUpdateRef = useRef(0);
   const playbackRequestRef = useRef(0);
@@ -38,19 +39,46 @@ export function VideoPlayer({
   const isLoading = playerState === "loading";
   const isError = playerState === "error";
 
-  useEffect(() => {
-    if (!isActive) {
-      shouldPlayRef.current = false;
-      playbackRequestRef.current += 1;
-      videoRef.current?.pause();
-    }
-  }, [isActive]);
-
   useEffect(() => () => {
     if (progressFrameRef.current !== null) {
       cancelAnimationFrame(progressFrameRef.current);
     }
   }, []);
+
+  const releaseVideoSource = useCallback(() => {
+    const video = videoRef.current;
+    shouldPlayRef.current = false;
+    playbackRequestRef.current += 1;
+
+    if (video && video.hasAttribute("src")) {
+      video.pause();
+      video.removeAttribute("src");
+      video.load();
+    }
+
+    setPlayerState("idle");
+    setErrorMessage(null);
+    setIsMuted(false);
+    setCurrentTime(0);
+    setDuration(null);
+  }, []);
+
+  useEffect(() => {
+    const stage = playerStageRef.current;
+    if (!stage || typeof IntersectionObserver === "undefined") return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry?.isIntersecting || entry.intersectionRatio < 0.1 || !isActive) {
+          releaseVideoSource();
+        }
+      },
+      { threshold: [0, 0.1] },
+    );
+
+    observer.observe(stage);
+    return () => observer.disconnect();
+  }, [isActive, releaseVideoSource]);
 
   const play = useCallback(async () => {
     const video = videoRef.current;
@@ -160,6 +188,9 @@ export function VideoPlayer({
     lastProgressUpdateRef.current = 0;
     setCurrentTime(0);
     setDuration(null);
+    if (!videoRef.current?.hasAttribute("src")) {
+      setPlayerState("idle");
+    }
   }
 
   function finishProgress() {
@@ -172,32 +203,46 @@ export function VideoPlayer({
   }
 
   function handleLoadStart() {
+    if (!videoRef.current?.hasAttribute("src")) {
+      setPlayerState("idle");
+      return;
+    }
+
     setErrorMessage(null);
     setPlayerState("loading");
   }
 
   function handleLoadedData() {
     setPlayerState((state) => (
-      state === "error"
-        ? state
-        : shouldPlayRef.current
-          ? "playing"
-          : "ready"
+      !videoRef.current?.hasAttribute("src")
+        ? "idle"
+        : state === "error"
+          ? state
+          : shouldPlayRef.current
+            ? "playing"
+            : "ready"
     ));
   }
 
   function handleCanPlay() {
     setPlayerState((state) => (
-      state === "error"
-        ? state
-        : shouldPlayRef.current
-          ? "playing"
-          : "ready"
+      !videoRef.current?.hasAttribute("src")
+        ? "idle"
+        : state === "error"
+          ? state
+          : shouldPlayRef.current
+            ? "playing"
+            : "ready"
     ));
   }
 
   function handlePause() {
     const video = videoRef.current;
+    if (!video?.hasAttribute("src")) {
+      setPlayerState("idle");
+      return;
+    }
+
     if (video?.paused && shouldPlayRef.current) {
       shouldPlayRef.current = false;
       playbackRequestRef.current += 1;
@@ -213,6 +258,11 @@ export function VideoPlayer({
   }
 
   function handleVideoError() {
+    if (!videoRef.current?.hasAttribute("src")) {
+      setPlayerState("idle");
+      return;
+    }
+
     const mediaError = videoRef.current?.error;
     const message = mediaError?.code === MediaError.MEDIA_ERR_SRC_NOT_SUPPORTED
       ? "This video format or source is not supported."
@@ -226,6 +276,7 @@ export function VideoPlayer({
   return (
     <div className="relative w-full overflow-hidden rounded-xl bg-black" data-player-state={playerState}>
       <div
+        ref={playerStageRef}
         className={[
           "group relative w-full bg-gray-950",
           !showVideo && presentation === "portrait" ? "aspect-[9/16]" : "",

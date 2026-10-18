@@ -3,8 +3,8 @@ import { ApiError } from "../types/api-error";
 import type { Video } from "../types/video";
 
 export const videoService = {
-  getVideos(): Video[] {
-    return videoRepository.getAll();
+  getVideos(userId?: string): Array<Video & { liked: boolean }> {
+    return videoRepository.getAll(userId);
   },
 
   likeVideo(videoId: string, userId: string): { video: Video; duplicate: boolean } {

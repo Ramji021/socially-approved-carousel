@@ -26,9 +26,17 @@ function invalidBody(response: Response, message: string): void {
 }
 
 export const videoController = {
-  getVideos(_request: Request, response: Response, next: NextFunction): void {
+  getVideos(request: Request, response: Response, next: NextFunction): void {
     try {
-      response.status(200).json({ videos: videoService.getVideos() });
+      const { userId } = request.query;
+      if (userId !== undefined && !isNonEmptyString(userId)) {
+        invalidBody(response, "userId query parameter must be a non-empty string.");
+        return;
+      }
+
+      response.status(200).json({
+        videos: videoService.getVideos(typeof userId === "string" ? userId.trim() : undefined),
+      });
     } catch (error) {
       next(error);
     }

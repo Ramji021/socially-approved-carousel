@@ -1,14 +1,33 @@
 import { memo } from "react";
-import type { Video } from "../../types/video";
+import { LikeButton } from "../LikeButton/LikeButton";
+import { ShareButton } from "../ShareButton/ShareButton";
+import type { SharePlatform, Video } from "../../types/video";
 
 export interface VideoCardProps {
   video: Video;
+  isLiked: boolean;
+  isPendingLike: boolean;
+  likeError?: string;
+  onLike: (videoId: string) => void;
+  isPendingShare: boolean;
+  shareError?: string;
+  onShare: (videoId: string, platform: SharePlatform) => Promise<void>;
   onSelect?: (video: Video) => void;
 }
 
-function VideoCardComponent({ video, onSelect }: VideoCardProps) {
+function VideoCardComponent({
+  video,
+  isLiked,
+  isPendingLike,
+  likeError,
+  onLike,
+  isPendingShare,
+  shareError,
+  onShare,
+  onSelect,
+}: VideoCardProps) {
   return (
-    <div className="overflow-hidden rounded-xl bg-gray-200">
+    <div className="relative overflow-hidden rounded-xl bg-gray-200">
       <button
         className="group relative block aspect-[4/5] w-full overflow-hidden bg-gray-200 p-0 text-left text-inherit focus-visible:outline focus-visible:outline-4 focus-visible:outline-violet-600"
         type="button"
@@ -38,11 +57,27 @@ function VideoCardComponent({ video, onSelect }: VideoCardProps) {
           <span className="block text-base font-semibold leading-snug text-white sm:text-lg">
             {video.title}
           </span>
-          <span className="mt-2 block text-xs font-medium text-white/80 sm:text-sm">
-            {video.likes.toLocaleString()} likes
-          </span>
         </span>
       </button>
+      <div className="absolute right-3 top-3">
+        <LikeButton
+          likes={video.likes}
+          isLiked={isLiked}
+          isPending={isPendingLike}
+          error={likeError}
+          onToggle={() => onLike(video.id)}
+        />
+      </div>
+      {/* <div className="absolute bottom-3 right-3">
+        <ShareButton
+          title={video.title}
+          videoUrl={video.videoUrl}
+          shares={video.shares}
+          isPending={isPendingShare}
+          error={shareError}
+          onShare={(platform) => onShare(video.id, platform)}
+        />
+      </div> */}
     </div>
   );
 }

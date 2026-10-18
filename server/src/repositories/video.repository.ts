@@ -9,8 +9,11 @@ const likedUsers = new Map<string, Set<string>>(
 );
 
 export const videoRepository = {
-  getAll(): Video[] {
-    return Array.from(videos.values(), (video) => ({ ...video }));
+  getAll(userId?: string): Array<Video & { liked: boolean }> {
+    return Array.from(videos.values(), (video) => ({
+      ...video,
+      liked: userId ? likedUsers.get(video.id)?.has(userId) ?? false : false,
+    }));
   },
 
   addLike(videoId: string, userId: string): { video: Video; duplicate: boolean } | undefined {

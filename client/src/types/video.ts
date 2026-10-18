@@ -7,6 +7,7 @@ export interface Video {
   likes: number;
   shares: number;
   duration: number;
+  liked: boolean;
 }
 
 export type SharePlatform = "copy" | "web-share" | "whatsapp" | "facebook" | "twitter";

@@ -1,13 +1,30 @@
 import { useEffect, useRef } from "react";
 import { VideoCard } from "../VideoCard/VideoCard";
-import type { Video } from "../../types/video";
+import type { SharePlatform, Video } from "../../types/video";
 
 export interface VideoCarouselProps {
   videos: Video[];
+  likedVideoIds: ReadonlySet<string>;
+  pendingLikeIds: ReadonlySet<string>;
+  likeErrors: Readonly<Record<string, string>>;
+  onLike: (videoId: string) => void;
+  pendingShareIds: ReadonlySet<string>;
+  shareErrors: Readonly<Record<string, string>>;
+  onShare: (videoId: string, platform: SharePlatform) => Promise<void>;
   onSelect: (video: Video) => void;
 }
 
-export function VideoCarousel({ videos, onSelect }: VideoCarouselProps) {
+export function VideoCarousel({
+  videos,
+  likedVideoIds,
+  pendingLikeIds,
+  likeErrors,
+  onLike,
+  pendingShareIds,
+  shareErrors,
+  onShare,
+  onSelect,
+}: VideoCarouselProps) {
   const trackRef = useRef<HTMLDivElement>(null);
   const pointerStartX = useRef(0);
   const scrollStartX = useRef(0);
@@ -100,7 +117,17 @@ export function VideoCarousel({ videos, onSelect }: VideoCarouselProps) {
             className="w-[min(78vw,340px)] shrink-0 snap-start sm:w-[min(45vw,340px)] lg:w-[min(31vw,360px)]"
             key={video.id}
           >
-            <VideoCard video={video} onSelect={onSelect} />
+            <VideoCard
+              video={video}
+              isLiked={likedVideoIds.has(video.id)}
+              isPendingLike={pendingLikeIds.has(video.id)}
+              likeError={likeErrors[video.id]}
+              onLike={onLike}
+              isPendingShare={pendingShareIds.has(video.id)}
+              shareError={shareErrors[video.id]}
+              onShare={onShare}
+              onSelect={onSelect}
+            />
           </div>
         ))}
       </div>

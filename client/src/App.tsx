@@ -4,12 +4,23 @@ import { VideoCarousel } from "./components/SociallyApproved/VideoCarousel";
 import { LoadingSpinner } from "./components/LoadingSpinner/LoadingSpinner";
 import { VideoModal } from "./components/VideoModal/VideoModal";
 import { useVideos } from "./hooks/useVideos";
-import type { Video } from "./types/video";
+import type { SharePlatform, Video } from "./types/video";
 
 const MAX_CAROUSEL_VIDEOS = 24;
 
 export function App() {
-  const { videos, isLoading, error } = useVideos();
+  const {
+    videos,
+    isLoading,
+    error,
+    likedVideoIds,
+    pendingLikeIds,
+    likeErrors,
+    likeVideo,
+    pendingShareIds,
+    shareErrors,
+    shareVideo,
+  } = useVideos();
   const carouselVideos = useMemo(
     () => videos.slice(0, MAX_CAROUSEL_VIDEOS),
     [videos],
@@ -22,6 +33,12 @@ export function App() {
   const closeVideo = useCallback(() => {
     setSelectedIndex(null);
   }, []);
+  const handleLike = useCallback((videoId: string) => {
+    void likeVideo(videoId);
+  }, [likeVideo]);
+  const handleShare = useCallback((videoId: string, platform: SharePlatform) => (
+    shareVideo(videoId, platform)
+  ), [shareVideo]);
 
   return (
     <SociallyApproved>
@@ -48,6 +65,13 @@ export function App() {
         {!isLoading && !error && videos.length > 0 && (
           <VideoCarousel
             videos={carouselVideos}
+            likedVideoIds={likedVideoIds}
+            pendingLikeIds={pendingLikeIds}
+            likeErrors={likeErrors}
+            onLike={handleLike}
+            pendingShareIds={pendingShareIds}
+            shareErrors={shareErrors}
+            onShare={handleShare}
             onSelect={openVideo}
           />
         )}
@@ -57,6 +81,13 @@ export function App() {
         isOpen={selectedIndex !== null}
         videos={carouselVideos}
         activeIndex={selectedIndex ?? 0}
+        likedVideoIds={likedVideoIds}
+        pendingLikeIds={pendingLikeIds}
+        likeErrors={likeErrors}
+        onLike={handleLike}
+        pendingShareIds={pendingShareIds}
+        shareErrors={shareErrors}
+        onShare={handleShare}
         onActiveIndexChange={setSelectedIndex}
         onClose={closeVideo}
       />

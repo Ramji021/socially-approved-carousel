@@ -1,11 +1,20 @@
 import { useEffect, useRef } from "react";
+import { LikeButton } from "../LikeButton/LikeButton";
+import { ShareButton } from "../ShareButton/ShareButton";
 import { VideoPlayer } from "../VideoPlayer/VideoPlayer";
-import type { Video } from "../../types/video";
+import type { SharePlatform, Video } from "../../types/video";
 
 export interface VideoModalProps {
   isOpen: boolean;
   videos: Video[];
   activeIndex: number;
+  likedVideoIds: ReadonlySet<string>;
+  pendingLikeIds: ReadonlySet<string>;
+  likeErrors: Readonly<Record<string, string>>;
+  onLike: (videoId: string) => void;
+  pendingShareIds: ReadonlySet<string>;
+  shareErrors: Readonly<Record<string, string>>;
+  onShare: (videoId: string, platform: SharePlatform) => Promise<void>;
   onActiveIndexChange: (index: number) => void;
   onClose: () => void;
 }
@@ -16,6 +25,13 @@ export function VideoModal({
   isOpen,
   videos,
   activeIndex,
+  likedVideoIds,
+  pendingLikeIds,
+  likeErrors,
+  onLike,
+  pendingShareIds,
+  shareErrors,
+  onShare,
   onActiveIndexChange,
   onClose,
 }: VideoModalProps) {
@@ -220,7 +236,7 @@ export function VideoModal({
             const isActive = index === activeIndex;
             const position = index - activeIndex;
             const slideClass = [
-              "absolute left-1/2 top-1/2 block w-[min(78vw,390px)] -translate-y-1/2 overflow-hidden rounded-xl bg-black p-0 text-left shadow-2xl transition-[transform,opacity] duration-300 ease-out focus-visible:outline focus-visible:outline-2 focus-visible:outline-white",
+              "absolute left-1/2 top-1/2 block w-[min(72vw,390px)] -translate-y-1/2 overflow-hidden rounded-xl bg-black p-0 text-left shadow-2xl transition-[transform,opacity] duration-300 ease-out focus-visible:outline focus-visible:outline-2 focus-visible:outline-white",
               isActive
                 ? "z-30 -translate-x-1/2 scale-100 opacity-100"
                 : position < 0
@@ -245,6 +261,25 @@ export function VideoModal({
                     isActive
                     presentation="portrait"
                   />
+                  <div className="absolute right-2 top-1/2 z-40 flex -translate-y-1/2 flex-col items-center gap-5 rounded-full bg-black/30 px-1 py-3 shadow-sm backdrop-blur-[2px] sm:right-3 sm:gap-7 sm:px-1.5 sm:py-4">
+                    <LikeButton
+                      likes={video.likes}
+                      isLiked={likedVideoIds.has(video.id)}
+                      isPending={pendingLikeIds.has(video.id)}
+                      error={likeErrors[video.id]}
+                      variant="rail"
+                      onToggle={() => onLike(video.id)}
+                    />
+                    <ShareButton
+                      title={video.title}
+                      videoUrl={video.videoUrl}
+                      shares={video.shares}
+                      isPending={pendingShareIds.has(video.id)}
+                      error={shareErrors[video.id]}
+                      variant="rail"
+                      onShare={(platform) => onShare(video.id, platform)}
+                    />
+                  </div>
                 </div>
               );
             }
@@ -257,13 +292,13 @@ export function VideoModal({
                 onClick={() => onActiveIndexChange(index)}
                 aria-label={`Show video ${index + 1}: ${video.title}`}
               >
-                  <img
-                    className="aspect-[9/16] max-h-[82vh] w-full bg-gray-200 object-cover"
-                    src={video.thumbnailUrl}
-                    alt=""
-                    loading="lazy"
-                    decoding="async"
-                  />
+                <img
+                  className="aspect-[9/16] max-h-[82vh] w-full bg-gray-200 object-cover"
+                  src={video.thumbnailUrl}
+                  alt=""
+                  loading="lazy"
+                  decoding="async"
+                />
               </button>
             );
           })}
