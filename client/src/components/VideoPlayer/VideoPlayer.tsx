@@ -75,6 +75,8 @@ export function VideoPlayer({
       await video.play();
       if (playbackRequest !== playbackRequestRef.current || !shouldPlayRef.current) {
         video.pause();
+      } else if (!video.paused) {
+        setPlayerState("playing");
       }
     } catch (playError) {
       if (playbackRequest !== playbackRequestRef.current || !shouldPlayRef.current) {
@@ -176,20 +178,33 @@ export function VideoPlayer({
 
   function handleLoadedData() {
     setPlayerState((state) => (
-      state === "playing" || state === "error" ? state : "ready"
+      state === "error"
+        ? state
+        : shouldPlayRef.current
+          ? "playing"
+          : "ready"
     ));
   }
 
   function handleCanPlay() {
     setPlayerState((state) => (
-      state === "playing" || state === "error" ? state : "ready"
+      state === "error"
+        ? state
+        : shouldPlayRef.current
+          ? "playing"
+          : "ready"
     ));
   }
 
   function handlePause() {
     const video = videoRef.current;
+    if (video?.paused && shouldPlayRef.current) {
+      shouldPlayRef.current = false;
+      playbackRequestRef.current += 1;
+    }
+
     setPlayerState((state) => {
-      if (state !== "error" && video !== null &&
+      if (!shouldPlayRef.current && state !== "error" && video !== null &&
         video.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA) {
         return "paused";
       }
@@ -212,7 +227,7 @@ export function VideoPlayer({
     <div className="relative w-full overflow-hidden rounded-xl bg-black" data-player-state={playerState}>
       <div
         className={[
-          "relative w-full bg-gray-950",
+          "group relative w-full bg-gray-950",
           !showVideo && presentation === "portrait" ? "aspect-[9/16]" : "",
           !showVideo && presentation === "landscape" ? "aspect-video" : "",
         ].join(" ")}
@@ -241,6 +256,9 @@ export function VideoPlayer({
             }
             setPlayerState("playing");
           }}
+          onPlaying={() => {
+            if (shouldPlayRef.current) setPlayerState("playing");
+          }}
           onPause={handlePause}
           onVolumeChange={() => setIsMuted(videoRef.current?.muted ?? false)}
           onLoadedMetadata={updateDuration}
@@ -254,7 +272,7 @@ export function VideoPlayer({
         {showVideo && (
           <div className="pointer-events-none absolute inset-0 z-10 flex items-center justify-center">
             <button
-              className="pointer-events-auto grid size-16 place-items-center rounded-full bg-black/65 text-white shadow-lg transition hover:scale-105 hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-white disabled:opacity-50"
+              className="pointer-events-none grid size-16 place-items-center rounded-full bg-black/65 text-white opacity-0 shadow-lg transition hover:scale-105 hover:bg-black/80 group-hover:pointer-events-auto group-hover:opacity-100 group-focus-within:pointer-events-auto group-focus-within:opacity-100 focus-visible:pointer-events-auto focus-visible:opacity-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-white disabled:opacity-50"
               type="button"
               onClick={togglePlayback}
               disabled={!isActive || isLoading || isError}
