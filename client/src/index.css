@@ -1,0 +1,9 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply min-w-[320px] bg-slate-50 font-sans text-gray-800 antialiased;
+  }
+}

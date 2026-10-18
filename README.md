@@ -57,6 +57,8 @@ client/
     types/          Frontend data and API response interfaces
     utils/           Shared formatting helpers
     App.tsx         Minimal application shell
+  tailwind.config.js Tailwind content and theme configuration
+  postcss.config.js Tailwind and Autoprefixer integration
   index.html        Vite browser document
   vite.config.ts    Vite and React plugin configuration
   tsconfig*.json    Client and Vite TypeScript settings
@@ -78,6 +80,7 @@ eslint.config.js    Shared ESLint rules for client and server
 
 - `client/` is the browser application, kept separate so it can be developed and built independently from the API.
 - `client/src/components/` contains small reusable building blocks; they are not assembled into the full carousel interface yet.
+- The client uses Tailwind CSS utility classes, configured through PostCSS and `client/tailwind.config.js`.
 - `client/src/services/videoApi.ts` centralizes requests to the video API using `VITE_API_BASE_URL`.
 - `client/src/hooks/useVideos.ts` provides loading, error, and video state for consumers of the API service.
 - `client/src/types/` defines the frontend video and API contracts.
