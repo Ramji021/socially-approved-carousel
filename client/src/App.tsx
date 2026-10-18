@@ -1,10 +1,23 @@
+import { useCallback, useState } from "react";
 import { SociallyApproved } from "./components/SociallyApproved/SociallyApproved";
-import { VideoCard } from "./components/VideoCard/VideoCard";
+import { VideoCarousel } from "./components/SociallyApproved/VideoCarousel";
 import { LoadingSpinner } from "./components/LoadingSpinner/LoadingSpinner";
+import { VideoModal } from "./components/VideoModal/VideoModal";
+import { VideoPlayer } from "./components/VideoPlayer/VideoPlayer";
 import { useVideos } from "./hooks/useVideos";
+import type { Video } from "./types/video";
+
+const MAX_CAROUSEL_VIDEOS = 24;
 
 export function App() {
   const { videos, isLoading, error } = useVideos();
+  const [selectedVideo, setSelectedVideo] = useState<Video | null>(null);
+  const openVideo = useCallback((video: Video) => {
+    setSelectedVideo(video);
+  }, []);
+  const closeVideo = useCallback(() => {
+    setSelectedVideo(null);
+  }, []);
 
   return (
     <SociallyApproved>
@@ -13,10 +26,10 @@ export function App() {
           Socially Approved
         </p>
         <h1 className="mb-2 mt-1 text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl">
-          Video library
+          Socially Approved
         </h1>
         <p className="max-w-2xl leading-relaxed text-slate-600">
-          Starter screen for the video carousel. Full carousel interactions are not implemented yet.
+          Discover videos people are enjoying.
         </p>
       </header>
 
@@ -31,15 +44,33 @@ export function App() {
       )}
 
       {!isLoading && !error && videos.length > 0 && (
-        <section
-          className="grid grid-cols-[repeat(auto-fit,minmax(min(100%,250px),1fr))] gap-5"
-          aria-label="Videos"
-        >
-          {videos.map((video) => (
-            <VideoCard key={video.id} video={video} />
-          ))}
-        </section>
+        <VideoCarousel
+          videos={videos.slice(0, MAX_CAROUSEL_VIDEOS)}
+          onSelect={openVideo}
+        />
       )}
+
+      <VideoModal
+        isOpen={selectedVideo !== null}
+        title={selectedVideo?.title ?? "Video"}
+        onClose={closeVideo}
+      >
+        {selectedVideo && (
+          <div className="w-full max-w-3xl">
+            <VideoPlayer
+              src={selectedVideo.videoUrl}
+              title={selectedVideo.title}
+              poster={selectedVideo.thumbnailUrl}
+            />
+            <h2 className="mt-4 text-xl font-semibold text-gray-900">
+              {selectedVideo.title}
+            </h2>
+            <p className="mt-2 text-sm leading-relaxed text-slate-600">
+              {selectedVideo.description}
+            </p>
+          </div>
+        )}
+      </VideoModal>
     </SociallyApproved>
   );
 }

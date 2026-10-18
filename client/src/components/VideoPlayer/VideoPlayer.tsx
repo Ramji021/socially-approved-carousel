@@ -5,5 +5,15 @@ export interface VideoPlayerProps {
 }
 
 export function VideoPlayer({ src, title, poster }: VideoPlayerProps) {
-  return <video src={src} title={title} poster={poster} controls playsInline />;
+  return (
+    <video
+      className="max-h-[65vh] w-full rounded-xl bg-black"
+      src={src}
+      title={title}
+      poster={poster}
+      controls
+      playsInline
+      preload="none"
+    />
+  );
 }
